@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Jisoo ❤️ (Timur)</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a2a">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a);
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; padding: 20px;
+        }
+        .container { text-align: center; z-index: 10; max-width: 500px; width: 100%; }
+        h1 { color: #87CEEB; font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(135, 206, 235, 0.5); }
+        .subtitle { color: #FFD700; font-size: 1.1rem; margin-bottom: 10px; }
+        .counter { color: #FFD700; font-size: 1.1rem; margin: 10px 0 20px 0; }
+        .counter span { color: #87CEEB; font-weight: bold; font-size: 1.5rem; }
+        .heart { font-size: 5rem; animation: pulse 1.5s infinite; margin: 20px 0; cursor: pointer; user-select: none; transition: transform 0.1s; }
+        .heart:active { transform: scale(0.9); }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        .button {
+            background: linear-gradient(135deg, #87CEEB, #FFD700); color: #0a0a2a;
+            border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem;
+            font-weight: bold; cursor: pointer; margin: 8px; transition: all 0.3s;
+            width: 80%; max-width: 300px;
+        }
+        .button:active { transform: scale(0.95); }
+        .button.miss { background: linear-gradient(135deg, #FFD700, #FFA500); color: #0a0a2a; }
+        .button.love { background: linear-gradient(135deg, #FF69B4, #FFD700); }
+        .fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .firework { position: absolute; width: 8px; height: 8px; border-radius: 50%; animation: explode 1s ease-out forwards; }
+        @keyframes explode { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(15); opacity: 0; } }
+        .floating-heart { position: fixed; font-size: 2.5rem; pointer-events: none; z-index: 100; animation: floatUp 2s ease-out forwards; }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-400px) scale(0.3); opacity: 0; } }
+        .notification-big {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #87CEEB, #FFD700); color: #0a0a2a;
+            padding: 25px 35px; border-radius: 25px; font-weight: bold; font-size: 1.3rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); animation: slideDown 0.5s; z-index: 1000;
+            text-align: center; width: 90%; max-width: 400px; border: 3px solid white;
+        }
+        @keyframes slideDown { from { transform: translate(-50%, -100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+        .notification-small {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2); color: white;
+            padding: 10px 20px; border-radius: 20px; font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideUp 0.5s; z-index: 999;
+        }
+        @keyframes slideUp { from { transform: translate(-50%, 100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 2s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .rose-bouquet { font-size: 2.5rem; margin: 20px 0; letter-spacing: 5px; animation: sway 2s ease-in-out infinite; }
+        @keyframes sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+        .message { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin: 15px 0; font-size: 1rem; color: #FFD700; border: 2px solid #87CEEB; font-weight: bold; }
+        .message.active { animation: glow 1s infinite; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #87CEEB; } 50% { box-shadow: 0 0 30px #FFD700; } }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="fireworks" id="fireworks"></div>
+    <div class="container">
+        <h1>For Jisoo ❤️</h1>
+        <p class="subtitle">From Timur</p>
+        <div class="counter">We've been together for <span id="days">0</span> days 💛</div>
+        <div class="heart" id="heart" onclick="sendHeart()">💙</div>
+        <button class="button miss" onclick="sendMiss()">I miss you 💛</button>
+        <button class="button love" onclick="sendLove()">I love you ❤️</button>
+        <button class="button" onclick="showFireworks()">Fireworks 🎆</button>
+        <div class="rose-bouquet">🌹🌹🌹🌹🌹</div>
+        <div class="message" id="message">Waiting for her signal... 💌</div>
+        <p style="color: #87CEEB; margin-top: 15px; font-size: 0.85rem;">Made with love by Timur ❤️</p>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyBnQH0dHRHTiSG1mCEp6uL4IIbALs-LrCc", authDomain: "you1-7df26.firebaseapp.com", databaseURL: "https://you1-7df26-default-rtdb.firebaseio.com", projectId: "you1-7df26", storageBucket: "you1-7df26.firebasestorage.app", messagingSenderId: "453777685720", appId: "1:453777685720:web:000364a3ce6d6cab29ebad" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            starsContainer.appendChild(star);
+        }
+        const startDate = new Date('2026-10-03');
+        const now = new Date();
+        document.getElementById('days').textContent = Math.floor((now - startDate) / (1000 * 60 * 60 * 24)) + 1;
+        function spawnHearts() {
+            const emojis = ['💛', '💙', '❤️', '💖', '💝', '💕', '💞'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const h = document.createElement('div');
+                    h.className = 'floating-heart';
+                    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    h.style.left = Math.random() * 100 + '%';
+                    h.style.bottom = '0';
+                    h.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+                    document.body.appendChild(h);
+                    setTimeout(() => h.remove(), 3500);
+                }, i * 80);
+            }
+        }
+        window.sendHeart = function() { spawnHearts(); set(ref(db, 'my_signal'), { type: 'heart', timestamp: Date.now() }); showSmallNotification("❤️ Sent to Jisoo!"); };
+        window.sendMiss = function() { set(ref(db, 'my_signal'), { type: 'miss', timestamp: Date.now() }); showSmallNotification("💛 Sent! Jisoo will see it"); };
+        window.sendLove = function() { set(ref(db, 'my_signal'), { type: 'love', timestamp: Date.now() }); showSmallNotification("❤️ Sent! Jisoo will see it"); };
+        window.showFireworks = function() {
+            const colors = ['#FFD700', '#87CEEB', '#FF69B4', '#FFA500', '#00BFFF'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const fw = document.createElement('div');
+                    fw.className = 'firework';
+                    fw.style.left = Math.random() * 100 + '%';
+                    fw.style.top = Math.random() * 100 + '%';
+                    fw.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    document.getElementById('fireworks').appendChild(fw);
+                    setTimeout(() => fw.remove(), 1000);
+                }, i * 80);
+            }
+        };
+        function showBigNotification(text) {
+            const notif = document.createElement('div');
+            notif.className = 'notification-big'; notif.textContent = text;
+            document.body.appendChild(notif); setTimeout(() => notif.remove(), 5000);
+        }
+        function showSmallNotification(text) {
+            const notif = document.createElement('div');
+            notif.className = 'notification-small'; notif.textContent = text;
+            document.body.appendChild(notif); setTimeout(() => notif.remove(), 2500);
+        }
+        onValue(ref(db, 'her_signal'), (snapshot) => {
+            const data = snapshot.val();
+            if (data && Date.now() - data.timestamp < 10000) {
+                const msg = document.getElementById('message');
+                if (data.type === 'miss') { msg.textContent = "💛 Jisoo misses you!"; msg.classList.add('active'); showBigNotification("Jisoo misses you! 💛"); spawnHearts(); }
+                else if (data.type === 'love') { msg.textContent = "❤️ Jisoo loves you!"; msg.classList.add('active'); showBigNotification("Jisoo loves you! ❤️"); spawnHearts(); }
+                else if (data.type === 'heart') { msg.textContent = "💖 Jisoo sent you a heart!"; msg.classList.add('active'); showBigNotification("Jisoo sent you a heart! 💖"); spawnHearts(); }
+                setTimeout(() => msg.classList.remove('active'), 5000);
+            }
+        });
+    </script>
+</body>
+</html>
